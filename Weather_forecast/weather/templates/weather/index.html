@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Прогноз погоды</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+         <span class="fs-4"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">IT OVERONE</font></font></span>
+      </a>
+
+      <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+        <a class="me-3 py-2 text-dark text-decoration-none" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Главная</font></font></a>
+        <a class="me-3 py-2 text-dark text-decoration-none" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Информация</font></font></a>
+      </nav>
+    </div>
+
+<div class="modal modal-sheet position-static d-block bg-secondary py-5" tabindex="-1" role="dialog" id="modalSheet">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-4 shadow">
+         <form action="" method="post">
+             {% csrf_token%}
+             <div class="modal-header border-bottom-0">
+                <h5 class="modal-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Введите город, чтобы узнать погоду:</font></font></h5>
+             </div>
+             <div class="modal-body py-0">
+                <label for="city"></label>
+                {{ form.name }}
+             </div>
+             <div class="modal-footer flex-column border-top-0">
+                <input type="submit" name="send" value="Узнать" class="mt-2 btn btn-danger">
+             </div>
+        </form>
+    </div>
+  </div>
+</div>
+<div class="modal modal-alert position-static d-block bg-secondary py-5" tabindex="-1" role="dialog" id="modalChoice">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-3 shadow">
+      <h5 class="modal-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Погода в выбранном городе: </font></font></h5>
+                {% for info in all_info %}
+                <div class="alert alert-info">
+                    <div class="row">
+                        <div class="col-9">
+                            <b>Город: </b>{{ info.city }}<br>
+                            <b>Температура: </b>{{ info.temp }}<sup>0</sup><br>
+                        </div>
+                        <div class="col-2 offset-1">
+                            <img src="http://openweathermap.org/img/w/{{ info.icon }}.png" alt="Фото погоды" class="img-thunbnail">
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
